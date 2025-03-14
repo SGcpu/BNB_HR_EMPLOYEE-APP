@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Employee Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Enhanced Header with Performance Summary -->
+        <div class="header">
+            <div class="user-info">
+                <div class="avatar">PT</div>
+                <div>
+                    <h2 id="username-display">Percival Thomas</h2>
+                    <p id="role-display">Employee ID: EMP001</p>
+                </div>
+            </div>
+            <div class="performance-summary">
+                <div class="rating">
+                    <span>Rating: </span>
+                    <span class="rating-value">4.8/5.0</span>
+                </div>
+                <div class="performance-tier">
+                    <span>Tier: </span>
+                    <span class="tier-value">Platinum</span>
+                </div>
+            </div>
+            <button onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Dashboard Grid with All Widgets -->
+        <div class="dashboard-grid">
+            <!-- Time & Attendance Widget -->
+            <div class="widget">
+                <h3>Time & Attendance</h3>
+                <div class="stat-card">
+                    <div class="stat-value" id="hours-worked">48</div>
+                    <span class="stat-label">Hours This Week</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="attendance-rate">95%</div>
+                    <span class="stat-label">Attendance Rate</span>
+                </div>
+                <div class="action-buttons">
+                    <button onclick="clockIn()">Clock In</button>
+                    <button onclick="clockOut()">Clock Out</button>
+                    <button onclick="requestBreak()">Request Break</button>
+                    <button onclick="requestLeave()">Request Leave</button>
+                </div>
+            </div>
+
+            <!-- Break Management Widget -->
+            <div class="widget">
+                <h3>Break Management</h3>
+                <div id="break-timer" class="break-timer-display">00:00:00</div>
+                <select id="break-type" class="break-select">
+                    <option value="coffee">Coffee Break (15 min)</option>
+                    <option value="lunch">Lunch Break (45 min)</option>
+                </select>
+                <div class="action-buttons">
+                    <button class="break-button" onclick="startBreak()">Start Break</button>
+                    <button class="break-button" onclick="endBreak()">End Break</button>
+                </div>
+                <table id="break-schedule">
+                    <tr>
+                        <th>Break Type</th>
+                        <th>Duration</th>
+                        <th>Status</th>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Performance & Rewards Widget -->
+            <div class="widget performance-widget">
+                <h3>Performance & Rewards</h3>
+                <div class="performance-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value">95%</div>
+                        <span class="metric-label">Attendance Rate</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">4.8</div>
+                        <span class="metric-label">Customer Rating</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 96%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rewards-summary">
+                    <h4>Current Rewards</h4>
+                    <ul class="rewards-list">
+                        <li>🎯 Quarterly Bonus Eligibility: 8%</li>
+                        <li>🎁 $50 Gift Card Available</li>
+                        <li>⭐ Priority Shift Selection</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Training & Certifications Widget -->
+            <div class="widget">
+                <h3>SKILLSIP</h3>
+                <div id="certification-badges" class="certification-badges"></div>
+                <table id="upcoming-training">
+                    <tr>
+                        <th>Course</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </table>
+                <div class="action-buttons">
+                    <button onclick="viewTrainingCatalog()">View Catalog</button>
+                    <button onclick="requestTraining()">Request Training</button>
+                </div>
+            </div>
+
+            <!-- Leaderboard Widget -->
+            <div class="widget leaderboard-widget">
+                <h3>Performance Leaderboard</h3>
+                <div class="leaderboard-tabs">
+                    <button class="tab-button active" onclick="switchLeaderboard('weekly')">Weekly</button>
+                    <button class="tab-button" onclick="switchLeaderboard('monthly')">Monthly</button>
+                </div>
+                <div id="leaderboard-content"></div>
+            </div>
+
+            <!-- Enhanced Schedule Widget -->
+            <div class="widget schedule-widget">
+                <h3>Schedule Management</h3>
+                <div class="schedule-preferences">
+                    <button onclick="openModal('shift-preferences-modal')" class="preference-button">
+                        Update Shift Preferences
+                    </button>
+                </div>
+                <table id="schedule-table">
+                    <tr>
+                        <th>Day</th>
+                        <th>Shift</th>
+                        <th>Hours</th>
+                        <th>Break Schedule</th>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Payroll & Benefits Widget -->
+            <div class="widget">
+                <h3>Payroll & Benefits</h3>
+                <div class="payroll-card">
+                    <h4>Monthly Salary</h4>
+                    <div class="salary-details">
+                        <div>
+                            <strong>Base Salary:</strong>
+                            <span id="base-salary">$4,500.00</span>
+                        </div>
+                        <div>
+                            <strong>Points Bonus:</strong>
+                            <span id="points-bonus">$250.00</span>
+                        </div>
+                        <div>
+                            <strong>Total Earnings:</strong>
+                            <span id="total-earnings">$4,750.00</span>
+                        </div>
+                        <div>
+                            <strong>Next Payday:</strong>
+                            <span id="next-payday">Oct 31, 2024</span>
+                        </div>
+                    </div>
+                    <div class="points-summary">
+                        <h4>Performance Points</h4>
+                        <div id="points-progress" class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                        <p>Current Points: <span id="current-points">750</span></p>
+                        <p>Points to Next Bonus: <span id="points-to-bonus">250</span></p>
+                    </div>
+                </div>
+                <button onclick="viewPayHistory()">View Pay History</button>
+            </div>
+
+            <!-- Messages Widget -->
+            <div class="widget">
+                <h3>Messages & Communication</h3>
+                <div id="messages-container" class="messages-container"></div>
+                <div class="messaging-input">
+                    <select id="message-recipient">
+                        <option value="">Select Recipient</option>
+                        <option value="manager">Manager</option>
+                        <option value="hr">HR Department</option>
+                        <option value="it">IT Support</option>
+                    </select>
+                    <textarea id="message-input" placeholder="Type your message..."></textarea>
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+
+            <!-- Skill Badges Widget -->
+            <div class="widget badges-widget">
+                <h3>Achievement Badges</h3>
+                <div class="badges-grid" id="badges-container"></div>
+                <div class="badge-progress">
+                    <h4>Next Badge Progress</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <span>15 more points to "Excellence in Service" badge</span>
+                </div>
+            </div>
+
+            <!-- Notification Center Widget -->
+            <div class="widget">
+                <h3>Notification Center</h3>
+                <div class="notification-badge">
+                    <span class="notification-count" id="notification-count">0</span>
+                </div>
+                <div id="notifications-list" class="notifications-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- All Modals -->
+    <!-- Leave Request Modal -->
+    <div id="leave-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Request Leave</h3>
+            <form id="leave-form">
+                <select id="leave-type" required>
+                    <option value="">Select Leave Type</option>
+                    <option value="vacation">Vacation</option>
+                    <option value="sick">Sick Leave</option>
+                    <option value="personal">Personal Leave</option>
+                </select>
+                <input type="date" id="leave-start" required>
+                <input type="date" id="leave-end" required>
+                <textarea id="leave-reason" placeholder="Reason for leave..."></textarea>
+                <button type="submit">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Training Request Modal -->
+    <div id="training-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Request Training</h3>
+            <form id="training-form">
+                <select id="training-course" required>
+                    <option value="">Select Course</option>
+                    <option value="safety">Safety Training</option>
+                    <option value="firstaid">First Aid</option>
+                    <option value="software">Software Training</option>
+                </select>
+                <input type="date" id="preferred-date" required>
+                <textarea id="training-notes" placeholder="Additional notes..."></textarea>
+                <button type="submit">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pay History Modal -->
+    <div id="pay-history-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Pay History</h3>
+            <table id="pay-history-table">
+                <tr>
+                    <th>Date</th>
+                    <th>Base Salary</th>
+                    <th>Bonus</th>
+                    <th>Total</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Training Catalog Modal -->
+    <div id="training-catalog-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Training Catalog</h3>
+            <div class="training-grid"></div>
+        </div>
+    </div>
+
+    <!-- Shift Preferences Modal -->
+    <div id="shift-preferences-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Shift Preferences</h3>
+            <form id="shift-preferences-form">
+                <div class="preference-section">
+                    <h4>Preferred Shift Times</h4>
+                    <select multiple id="preferred-shifts">
+                        <option value="morning">Morning (6AM - 2PM)</option>
+                        <option value="day">Day (9AM - 5PM)</option>
+                        <option value="evening">Evening (2PM - 10PM)</option>
+                    </select>
+                </div>
+                <div class="preference-section">
+                    <h4>Special Accommodations</h4>
+                    <div class="accommodation-options">
+                        <label>
+                            <input type="checkbox" id="flexible-schedule">
+                            Flexible Schedule Needed
+                        </label>
+                        <label>
+                            <input type="checkbox" id="extended-breaks">
+                            Extended Breaks Required
+                        </label>
+                    </div>
+                </div>
+                <div class="preference-section">
+                    <h4>Additional Notes</h4>
+                    <textarea id="preference-notes" placeholder="Any additional requirements or notes..."></textarea>
+                </div>
+                <button type="submit">Save Preferences</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="notification"></div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
